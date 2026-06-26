@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استودیوی هندسه</title>
+    <!-- فونت‌های فارسی -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/lalezar-font@v1.0.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        :root {
+            --bg: #0d1117;
+            --panel: #161b22;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text2: #8b949e;
+            --accent: #00d4ff;
+            --accent2: #7c3aed;
+            --accent3: #f72585;
+            --green: #2ecc71;
+            --orange: #f39c12;
+            --red: #e74c3c;
+            --grid1: #111820;
+            --grid2: #151d28;
+            --glow: 0 0 20px rgba(0, 212, 255, 0.3);
+            --glow-strong: 0 0 35px rgba(0, 212, 255, 0.5);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-body: 'Vazirmatn', sans-serif;
+            --font-heading: 'Lalezar', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            display: flex;
+            flex-direction: column;
+            background-image:
+                radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(247, 37, 133, 0.02) 0%, transparent 70%);
+            direction: rtl;
+        }
+
+        /* ─── HEADER ─────────────────────── */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            gap: 16px;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+            font-family: var(--font-heading);
+        }
+        .app-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+        }
+        .app-logo .icon {
+            -webkit-text-fill-color: initial;
+            font-size: 1.8rem;
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--panel);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            letter-spacing: 0.3px;
+            font-family: var(--font-body);
+        }
+        .btn:hover {
+            border-color: var(--accent);
+            box-shadow: var(--glow);
+            background: #1a2230;
+            transform: translateY(-1px);
+        }
+        .btn:active {
+            transform: scale(0.96);
+            transition: 0.08s;
+        }
+        .btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            box-shadow: var(--glow-strong);
+            font-weight: 700;
+        }
+        .btn.accent {
+            background: var(--accent2);
+            border-color: var(--accent2);
+            color: #fff;
+            font-weight: 600;
+        }
+        .btn.accent:hover {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.5);
+            background: #8b5cf6;
+        }
+        .btn.danger {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        .btn.danger:hover {
+            background: rgba(231, 76, 60, 0.15);
+            border-color: #ff5c4a;
+            box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+        }
+        .btn.small {
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+        }
+        .color-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        .color-dot:hover {
+            transform: scale(1.3);
+            border-color: #fff;
+            box-shadow: 0 0 12px currentColor;
+        }
+        .color-dot.active {
+            border-color: #fff;
+            box-shadow: 0 0 16px currentColor;
+            transform: scale(1.2);
+        }
+        .divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+            margin: 0 4px;
+            flex-shrink: 0;
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 70px;
+            height: 5px;
+            border-radius: 5px;
+            background: var(--border);
+            outline: none;
+            cursor: pointer;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 8px var(--accent);
+        }
+        input[type="color"] {
+            -webkit-appearance: none;
+            width: 30px;
+            height: 28px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            background: transparent;
+            padding: 2px;
+        }
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+        input[type="color"]::-webkit-color-swatch {
+            border-radius: 4px;
+            border: none;
+        }
+
+        /* ─── TAB SYSTEM ────────────────── */
+        .tab-nav {
+            display: flex;
+            gap: 0;
+            padding: 0 16px;
+            background: var(--panel);
+            border-bottom: 2px solid var(--border);
+            flex-shrink: 0;
+            direction: rtl;
+        }
+        .tab-btn {
+            padding: 13px 28px;
+            background: transparent;
+            border: none;
+            color: var(--text2);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            letter-spacing: 0.4px;
+            font-family: var(--font-heading);
+        }
+        .tab-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            text-shadow: 0 0 18px rgba(0, 212, 255, 0.5);
+        }
+        .tab-btn .badge {
+            display: inline-block;
+            background: var(--accent3);
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-right: 6px;
+            font-weight: 700;
+            animation: pulse-badge 2s infinite;
+            font-family: var(--font-body);
+        }
+        @keyframes pulse-badge {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        .tab-content {
+            display: none;
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ─── DRAWING TAB ──────────────── */
+        .draw-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+            direction: ltr;
+        }
+        .draw-container.tool-select {
+            cursor: default;
+        }
+        .draw-container.tool-eraser {
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='9' fill='none' stroke='%23e74c3c' stroke-width='2'/%3E%3C/svg%3E") 10 10, crosshair;
+        }
+        .draw-container.tool-pan {
+            cursor: grab;
+        }
+        .draw-container.tool-pan:active {
+            cursor: grabbing;
+        }
+        canvas#drawCanvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .coord-display {
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.75);
+            color: var(--accent);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: 'Vazirmatn', monospace;
+            pointer-events: none;
+            letter-spacing: 1px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .zoom-indicator {
+            position: absolute;
+            bottom: 12px;
+            left: 16px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            pointer-events: none;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: var(--font-body);
+        }
+
+        /* ─── CALCULATOR TAB ───────────── */
+        .calc-container {
+            flex: 1;
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            overflow-y: auto;
+            flex-wrap: wrap;
+            direction: rtl;
+        }
+        .calc-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 180px;
+            flex-shrink: 0;
+        }
+        .calc-sidebar .btn {
+            justify-content: flex-start;
+            font-weight: 500;
+            padding: 10px 14px;
+        }
+        .calc-sidebar .btn .shape-icon {
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
+            margin-left: 6px;
+        }
+        .calc-main {
+            flex: 1;
+            min-width: 300px;
+            background: var(--panel);
+            border-radius: var(--radius);
+            padding: 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .calc-main h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: var(--accent);
+            text-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+            font-family: var(--font-heading);
+        }
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .input-row label {
+            font-weight: 500;
+            min-width: 100px;
+            color: var(--text2);
+            font-size: 0.9rem;
+            font-family: var(--font-body);
+        }
+        .input-row input {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: #0d1117;
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            outline: none;
+            font-family: var(--font-body);
+        }
+        .input-row input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+        }
+        .result-box {
+            background: #0d1117;
+            border-radius: var(--radius);
+            padding: 18px;
+            border: 1px solid var(--border);
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .result-box .res-line {
+            font-size: 1.05rem;
+            padding: 6px 0;
+            font-weight: 500;
+        }
+        .result-box .res-line span {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .history-box {
+            background: #0d1117;
+            border-radius: var(--radius);
+            padding: 12px;
+            border: 1px solid var(--border);
+            max-height: 180px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            color: var(--text2);
+        }
+        .history-box .hist-item {
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-right: 2px solid transparent;
+            text-align: right;
+        }
+        .history-box .hist-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-right-color: var(--accent);
+            color: var(--text);
+        }
+
+        /* ─── TOAST ────────────────────── */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none;
+            direction: rtl;
+        }
+        .toast {
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            animation: slideInLeft 0.35s ease, fadeOut 0.4s 2s forwards;
+            pointer-events: auto;
+            backdrop-filter: blur(8px);
+            letter-spacing: 0.3px;
+            font-family: var(--font-body);
+        }
+        .toast.success {
+            background: rgba(46, 204, 113, 0.9);
+        }
+        .toast.info {
+            background: rgba(0, 180, 220, 0.9);
+        }
+        .toast.warning {
+            background: rgba(243, 156, 18, 0.9);
+        }
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-120%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+        }
+
+        /* ─── RESPONSIVE ──────────────── */
+        @media (max-width: 768px) {
+            .app-header {
+                flex-wrap: wrap;
+                padding: 8px 12px;
+                gap: 6px;
+            }
+            .app-logo {
+                font-size: 1.2rem;
+            }
+            .btn {
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            .tab-btn {
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+            .calc-container {
+                flex-direction: column;
+                padding: 8px;
+            }
+            .calc-sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                min-width: auto;
+            }
+            .calc-sidebar .btn {
+                flex: 1;
+                min-width: 80px;
+                justify-content: center;
+                font-size: 0.7rem;
+                padding: 8px 6px;
+            }
+            input[type="range"] {
+                width: 40px;
+            }
+            .divider {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── HEADER ─────────────────────── -->
+    <header class="app-header">
+        <span class="app-logo">
+            <span class="icon">📐</span> استودیوی هندسه
+        </span>
+        <div class="header-actions" id="globalActions">
+            <button class="btn small" onclick="undoAction()" title="برگشت (Ctrl+Z)">↩ برگشت</button>
+            <button class="btn small" onclick="redoAction()" title="بازانجام (Ctrl+Y)">↪ بازانجام</button>
+            <span class="divider"></span>
+            <button class="btn small" onclick="exportPNG()" title="خروجی PNG">📥 خروجی عکس</button>
+            <button class="btn small danger" onclick="clearCanvas()" title="پاک کردن همه">🗑 پاک‌سازی</button>
+        </div>
+    </header>
+
+    <!-- ─── TAB NAVIGATION ────────────── -->
+    <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-tab="drawTab" onclick="switchTab('drawTab')">✏️ تخته رسم <span class="badge">جدید</span></button>
+        <button class="tab-btn" data-tab="calcTab" onclick="switchTab('calcTab')">🧮 ماشین حساب</button>
+    </nav>
+
+    <!-- ─── DRAW TAB ──────────────────── -->
+    <div class="tab-content active" id="drawTab">
+        <!-- نوار ابزار -->
+        <div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--border);flex-wrap:wrap;flex-shrink:0;direction:rtl;">
+            <button class="btn small active tool-btn" data-tool="line" onclick="setTool('line', this)" title="خط (L)">📏 خط</button>
+            <button class="btn small tool-btn" data-tool="rect" onclick="setTool('rect', this)" title="مستطیل (R)">⬜ مستطیل</button>
+            <button class="btn small tool-btn" data-tool="ellipse" onclick="setTool('ellipse', this)" title="بیضی (E)">⭕ بیضی</button>
+            <button class="btn small tool-btn" data-tool="triangle" onclick="setTool('triangle', this)" title="مثلث (T)">🔺 مثلث</button>
+            <button class="btn small tool-btn" data-tool="select" onclick="setTool('select', this)" title="انتخاب/جابه‌جایی (S)">🖱 انتخاب</button>
+            <button class="btn small tool-btn" data-tool="eraser" onclick="setTool('eraser', this)" title="پاک‌کن (X)">🧹 پاک‌کن</button>
+            <span class="divider"></span>
+            <span style="font-size:0.75rem;color:var(--text2);white-space:nowrap;">پر کردن:</span>
+            <button class="btn small" id="fillToggle" onclick="toggleFill()" title="تغییر حالت پر (F)">⬜ توخالی</button>
+            <span class="divider"></span>
+            <span style="font-size:0.75rem;color:var(--text2);">رنگ:</span>
+            <span class="color-dot active" style="background:#ffffff;" data-color="#ffffff" onclick="setColor('#ffffff', this)" title="سفید"></span>
+            <span class="color-dot" style="background:#00d4ff;" data-color="#00d4ff" onclick="setColor('#00d4ff', this)" title="فیروزه‌ای"></span>
+            <span class="color-dot" style="background:#f72585;" data-color="#f72585" onclick="setColor('#f72585', this)" title="صورتی"></span>
+            <span class="color-dot" style="background:#f39c12;" data-color="#f39c12" onclick="setColor('#f39c12', this)" title="نارنجی"></span>
+            <span class="color-dot" style="background:#2ecc71;" data-color="#2ecc71" onclick="setColor('#2ecc71', this)" title="سبز"></span>
+            <span class="color-dot" style="background:#7c3aed;" data-color="#7c3aed" onclick="setColor('#7c3aed', this)" title="بنفش"></span>
+            <span class="color-dot" style="background:#ff6b6b;" data-color="#ff6b6b" onclick="setColor('#ff6b6b', this)" title="قرمز"></span>
+            <input type="color" id="customColor" value="#ffffff" onchange="setColor(this.value, null)" title="رنگ دلخواه">
+            <span class="divider"></span>
+            <span style="font-size:0.75rem;color:var(--text2);">ضخامت:</span>
+            <input type="range" id="lineWidth" min="1" max="20" value="3" oninput="updateLineWidth(this.value)" title="ضخامت خط">
+            <span id="lineWidthVal" style="font-size:0.75rem;color:var(--accent);font-weight:700;min-width:20px;">۳</span>
+            <span class="divider"></span>
+            <button class="btn small" id="gridToggle" onclick="toggleGrid()" title="تغییر شطرنجی (G)">🔲 شطرنجی روشن</button>
+            <span style="font-size:0.75rem;color:var(--text2);">اندازه:</span>
+            <input type="range" id="gridSize" min="15" max="80" value="40" oninput="updateGridSize(this.value)" title="فاصله خطوط">
+            <span id="gridSizeVal" style="font-size:0.75rem;color:var(--accent);font-weight:700;">۴۰</span>
+        </div>
+        <!-- بوم رسم -->
+        <div class="draw-container" id="drawContainer">
+            <canvas id="drawCanvas"></canvas>
+            <div class="coord-display" id="coordDisplay">X: ۰ &nbsp; Y: ۰</div>
+            <div class="zoom-indicator" id="zoomIndicator">شبکه: ۴۰px</div>
+        </div>
+    </div>
+
+    <!-- ─── CALCULATOR TAB ────────────── -->
+    <div class="tab-content" id="calcTab">
+        <div class="calc-container">
+            <div class="calc-sidebar" id="calcSidebar">
+                <button class="btn active shape-btn-calc" data-shape="square" onclick="selectCalcShape('square', this)"><span class="shape-icon">⬜</span> مربع</button>
+                <button class="btn shape-btn-calc" data-shape="rectangle" onclick="selectCalcShape('rectangle', this)"><span class="shape-icon">▭</span> مستطیل</button>
+                <button class="btn shape-btn-calc" data-shape="circle" onclick="selectCalcShape('circle', this)"><span class="shape-icon">⭕</span> دایره</button>
+                <button class="btn shape-btn-calc" data-shape="triangle" onclick="selectCalcShape('triangle', this)"><span class="shape-icon">🔺</span> مثلث</button>
+                <button class="btn shape-btn-calc" data-shape="rhombus" onclick="selectCalcShape('rhombus', this)"><span class="shape-icon">◇</span> لوزی</button>
+                <button class="btn shape-btn-calc" data-shape="trapezoid" onclick="selectCalcShape('trapezoid', this)"><span class="shape-icon">⏢</span> ذوزنقه</button>
+                <button class="btn shape-btn-calc" data-shape="parallelogram" onclick="selectCalcShape('parallelogram', this)"><span class="shape-icon">▱</span> متوازی‌الاضلاع</button>
+                <button class="btn shape-btn-calc" data-shape="ellipse" onclick="selectCalcShape('ellipse', this)"><span class="shape-icon">🔵</span> بیضی</button>
+                <button class="btn shape-btn-calc" data-shape="sphere" onclick="selectCalcShape('sphere', this)"><span class="shape-icon">🌐</span> کره</button>
+                <button class="btn shape-btn-calc" data-shape="cube" onclick="selectCalcShape('cube', this)"><span class="shape-icon">📦</span> مکعب</button>
+                <button class="btn shape-btn-calc" data-shape="cylinder" onclick="selectCalcShape('cylinder', this)"><span class="shape-icon">🥫</span> استوانه</button>
+                <button class="btn shape-btn-calc" data-shape="cone" onclick="selectCalcShape('cone', this)"><span class="shape-icon">📐</span> مخروط</button>
+            </div>
+            <div class="calc-main" id="calcMain">
+                <h3 id="calcTitle">⬜ محاسبه‌گر مربع</h3>
+                <div id="calcInputs"></div>
+                <button class="btn accent" onclick="calculateShape()" style="align-self:flex-start;">⚡ محاسبه</button>
+                <div id="calcResult" class="result-box" style="display:none;"></div>
+                <div class="history-box" id="calcHistory">
+                    <strong style="color:var(--text2);">📋 تاریخچه</strong>
+                    <div id="historyList" style="margin-top:6px;">هنوز محاسبه‌ای انجام نشده.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── TOAST CONTAINER ───────────── -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ──────────────────────────────────────────────
+        //  مدیریت صدا
+        // ──────────────────────────────────────────────
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(freq = 440, type = 'sine', duration = 0.1, vol = 0.1) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function soundClick() { playSound(660, 'sine', 0.08, 0.08); }
+
+        function soundDraw() { playSound(440, 'triangle', 0.15, 0.12); }
+
+        function soundClear() { playSound(220, 'square', 0.3, 0.1); }
+
+        function soundUndo() { playSound(330, 'sine', 0.1, 0.06); }
+
+        function soundCalc() { playSound(880, 'sine', 0.1, 0.1);
+            playSound(1100, 'sine', 0.1, 0.08); }
+
+        function soundError() { playSound(150, 'sawtooth', 0.25, 0.12); }
+
+        function soundSelect() { playSound(520, 'triangle', 0.07, 0.06); }
+
+        // فعال‌سازی صدا با اولین تعامل کاربر
+        document.body.addEventListener('click', initAudio, { once: true });
+        document.body.addEventListener('touchstart', initAudio, { once: true });
+
+        // ──────────────────────────────────────────────
+        //  GLOBAL STATE
+        // ──────────────────────────────────────────────
+        const gridSpacing = { val: 40 };
+        const lineWidth = { val: 3 };
+        let currentColor = '#ffffff';
+        let currentTool = 'line';
+        let fillEnabled = false;
+        let gridVisible = true;
+        let shapes = [];
+        let undoStack = [];
+        let redoStack = [];
+        let selectedShapeIndex = -1;
+        let isDrawing = false;
+        let startPos = null;
+        let currentTempShape = null;
+        let panOffset = { x: 0, y: 0 };
+        let isPanning = false;
+        let panStart = null;
+        let calcShapeType = 'square';
+        let calcHistory = [];
+
+        // ──────────────────────────────────────────────
+        //  CANVAS SETUP
+        // ──────────────────────────────────────────────
+        const drawContainer = document.getElementById('drawContainer');
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+        const coordDisplay = document.getElementById('coordDisplay');
+        const zoomIndicator = document.getElementById('zoomIndicator');
+
+        function resizeCanvas() {
+            const rect = drawContainer.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            redrawAll();
+        }
+        window.addEventListener('resize', resizeCanvas);
+        new ResizeObserver(resizeCanvas).observe(drawContainer);
+
+        // ──────────────────────────────────────────────
+        //  DRAWING FUNCTIONS
+        // ──────────────────────────────────────────────
+        function snap(x, y) {
+            const gs = gridSpacing.val;
+            return {
+                x: Math.round((x - panOffset.x) / gs) * gs + panOffset.x,
+                y: Math.round((y - panOffset.y) / gs) * gs + panOffset.y
+            };
+        }
+
+        function drawGrid() {
+            if (!gridVisible) return;
+            const gs = gridSpacing.val;
+            const w = canvas.width;
+            const h = canvas.height;
+            const startX = (panOffset.x % gs + gs) % gs;
+            const startY = (panOffset.y % gs + gs) % gs;
+            let count = 0;
+            for (let x = startX; x < w; x += gs) {
+                for (let y = startY; y < h; y += gs) {
+                    ctx.fillStyle = (count % 2 === 0) ? '#111820' : '#151d28';
+                    ctx.fillRect(x, y, gs, gs);
+                    count++;
+                }
+                count++;
+            }
+        }
+
+        function drawShape(shape, isSelected = false) {
+            ctx.save();
+            ctx.strokeStyle = shape.color;
+            ctx.fillStyle = shape.filled ? shape.color + '99' : 'transparent';
+            ctx.lineWidth = shape.lineWidth || 3;
+            ctx.setLineDash([]);
+
+            if (isSelected) {
+                ctx.setLineDash([6, 4]);
+                ctx.strokeStyle = '#ffdd00';
+                ctx.lineWidth = (shape.lineWidth || 3) + 2;
+                ctx.shadowColor = '#ffdd00';
+                ctx.shadowBlur = 16;
+            }
+
+            ctx.beginPath();
+            switch (shape.type) {
+                case 'line':
+                    ctx.moveTo(shape.x1, shape.y1);
+                    ctx.lineTo(shape.x2, shape.y2);
+                    ctx.stroke();
+                    break;
+                case 'rect':
+                    if (shape.filled) ctx.fillRect(shape.x, shape.y, shape.w, shape.h);
+                    ctx.strokeRect(shape.x, shape.y, shape.w, shape.h);
+                    break;
+                case 'ellipse':
+                    ctx.ellipse(shape.x + shape.w / 2, shape.y + shape.h / 2, Math.abs(shape.w / 2), Math.abs(shape.h /
+                        2), 0, 0, Math.PI * 2);
+                    if (shape.filled) ctx.fill();
+                    ctx.stroke();
+                    break;
+                case 'triangle':
+                    ctx.moveTo(shape.x + shape.w / 2, shape.y);
+                    ctx.lineTo(shape.x, shape.y + shape.h);
+                    ctx.lineTo(shape.x + shape.w, shape.y + shape.h);
+                    ctx.closePath();
+                    if (shape.filled) ctx.fill();
+                    ctx.stroke();
+                    break;
+            }
+            ctx.restore();
+
+            // دستگیره‌های انتخاب
+            if (isSelected) {
+                ctx.fillStyle = '#ffdd00';
+                let hx, hy, hw, hh;
+                if (shape.type === 'line') {
+                    hx = shape.x1;
+                    hy = shape.y1;
+                    hw = shape.x2;
+                    hh = shape.y2;
+                } else {
+                    hx = shape.x;
+                    hy = shape.y;
+                    hw = shape.x + shape.w;
+                    hh = shape.y + shape.h;
+                }
+                const handles = [{ x: hx, y: hy }, { x: hw, y: hy }, { x: hx, y: hh }, { x: hw, y: hh }, { x: (hx + hw) /
+                        2, y: (hy + hh) / 2 }];
+                handles.forEach(pt => {
+                    ctx.fillRect(pt.x - 5, pt.y - 5, 10, 10);
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 1;
+                    ctx.setLineDash([]);
+                    ctx.strokeRect(pt.x - 5, pt.y - 5, 10, 10);
+                });
+            }
+        }
+
+        function redrawAll() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+            shapes.forEach((shape, i) => {
+                drawShape(shape, i === selectedShapeIndex);
+            });
+            if (currentTempShape && isDrawing) {
+                drawShape(currentTempShape, false);
+            }
+        }
+
+        function pushUndo() {
+            undoStack.push(JSON.parse(JSON.stringify(shapes)));
+            if (undoStack.length > 60) undoStack.shift();
+            redoStack = [];
+        }
+
+        function undoAction() {
+            if (undoStack.length === 0) { showToast('چیزی برای برگشت وجود ندارد', 'warning');
+                soundError(); return; }
+            redoStack.push(JSON.parse(JSON.stringify(shapes)));
+            shapes = undoStack.pop();
+            selectedShapeIndex = -1;
+            redrawAll();
+            showToast('↩ برگشت داده شد', 'info');
+            soundUndo();
+        }
+
+        function redoAction() {
+            if (redoStack.length === 0) { showToast('چیزی برای بازانجام وجود ندارد', 'warning');
+                soundError(); return; }
+            undoStack.push(JSON.parse(JSON.stringify(shapes)));
+            shapes = redoStack.pop();
+            selectedShapeIndex = -1;
+            redrawAll();
+            showToast('↪ بازانجام شد', 'info');
+            soundUndo();
+        }
+
+        function clearCanvas() {
+            if (shapes.length === 0 && undoStack.length === 0) return;
+            pushUndo();
+            shapes = [];
+            selectedShapeIndex = -1;
+            currentTempShape = null;
+            redrawAll();
+            showToast('🗑 بوم رسم پاک شد', 'warning');
+            soundClear();
+        }
+
+        function exportPNG() {
+            const tempSelected = selectedShapeIndex;
+            selectedShapeIndex = -1;
+            redrawAll();
+            const link = document.createElement('a');
+            link.download = 'نقاشی-هندسی-' + new Date().toISOString().slice(0, 19).replace(/:/g, '-') + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+            selectedShapeIndex = tempSelected;
+            redrawAll();
+            showToast('📥 تصویر با موفقیت ذخیره شد', 'success');
+            soundClick();
+        }
+
+        // ──────────────────────────────────────────────
+        //  HIT TESTING
+        // ──────────────────────────────────────────────
+        function hitTest(px, py, shape) {
+            const threshold = 10;
+            switch (shape.type) {
+                case 'line': {
+                    const dx = shape.x2 - shape.x1;
+                    const dy = shape.y2 - shape.y1;
+                    const len2 = dx * dx + dy * dy;
+                    if (len2 === 0) return Math.hypot(px - shape.x1, py - shape.y1) < threshold;
+                    let t = ((px - shape.x1) * dx + (py - shape.y1) * dy) / len2;
+                    t = Math.max(0, Math.min(1, t));
+                    const cx = shape.x1 + t * dx;
+                    const cy = shape.y1 + t * dy;
+                    return Math.hypot(px - cx, py - cy) < threshold + (shape.lineWidth || 3);
+                }
+                case 'rect':
+                    return px >= shape.x - threshold && px <= shape.x + shape.w + threshold &&
+                        py >= shape.y - threshold && py <= shape.y + shape.h + threshold;
+                case 'ellipse': {
+                    const cx = shape.x + shape.w / 2;
+                    const cy = shape.y + shape.h / 2;
+                    const rx = Math.abs(shape.w / 2) + threshold;
+                    const ry = Math.abs(shape.h / 2) + threshold;
+                    return ((px - cx) ** 2) / (rx ** 2) + ((py - cy) ** 2) / (ry ** 2) <= 1;
+                }
+                case 'triangle': {
+                    const x1 = shape.x + shape.w / 2,
+                        y1 = shape.y;
+                    const x2 = shape.x,
+                        y2 = shape.y + shape.h;
+                    const x3 = shape.x + shape.w,
+                        y3 = shape.y + shape.h;
+                    const d1 = (px - x2) * (y3 - y2) - (x3 - x2) * (py - y2);
+                    const d2 = (px - x3) * (y1 - y3) - (x1 - x3) * (py - y3);
+                    const d3 = (px - x1) * (y2 - y1) - (x2 - x1) * (py - y1);
+                    const neg = d1 <= 0 && d2 <= 0 && d3 <= 0;
+                    const pos = d1 >= 0 && d2 >= 0 && d3 >= 0;
+                    return neg || pos;
+                }
+                default:
+                    return false;
+            }
+        }
+
+        function findShapeAt(px, py) {
+            for (let i = shapes.length - 1; i >= 0; i--) {
+                if (hitTest(px, py, shapes[i])) return i;
+            }
+            return -1;
+        }
+
+        // ──────────────────────────────────────────────
+        //  MOUSE / TOUCH EVENTS
+        // ──────────────────────────────────────────────
+        function getCanvasPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            initAudio();
+            const pos = getCanvasPos(e);
+            if (e.button === 1 || (e.button === 0 && e.altKey)) {
+                isPanning = true;
+                panStart = { x: pos.x - panOffset.x, y: pos.y - panOffset.y };
+                drawContainer.classList.add('tool-pan');
+                e.preventDefault();
+                return;
+            }
+            if (e.button !== 0) return;
+
+            if (currentTool === 'pan') {
+                isPanning = true;
+                panStart = { x: pos.x - panOffset.x, y: pos.y - panOffset.y };
+                return;
+            }
+
+            if (currentTool === 'select') {
+                const idx = findShapeAt(pos.x, pos.y);
+                if (idx >= 0) {
+                    selectedShapeIndex = idx;
+                    redrawAll();
+                    isDrawing = true;
+                    startPos = { x: pos.x, y: pos.y };
+                    const shape = shapes[idx];
+                    startPos.shapeRef = shape;
+                    startPos.origX = shape.type === 'line' ? shape.x1 : shape.x;
+                    startPos.origY = shape.type === 'line' ? shape.y1 : shape.y;
+                    soundSelect();
+                } else {
+                    selectedShapeIndex = -1;
+                    redrawAll();
+                }
+                return;
+            }
+
+            if (currentTool === 'eraser') {
+                const idx = findShapeAt(pos.x, pos.y);
+                if (idx >= 0) {
+                    pushUndo();
+                    shapes.splice(idx, 1);
+                    selectedShapeIndex = -1;
+                    redrawAll();
+                    showToast('🧹 شکل پاک شد', 'info');
+                    soundDraw();
+                }
+                return;
+            }
+
+            // ابزارهای رسم
+            const snapped = snap(pos.x, pos.y);
+            startPos = { x: snapped.x, y: snapped.y };
+            isDrawing = true;
+            currentTempShape = {
+                type: currentTool,
+                color: currentColor,
+                lineWidth: lineWidth.val,
+                filled: fillEnabled && currentTool !== 'line',
+                x: snapped.x,
+                y: snapped.y,
+                w: 0,
+                h: 0,
+                x1: snapped.x,
+                y1: snapped.y,
+                x2: snapped.x,
+                y2: snapped.y,
+            };
+            soundClick();
+            redrawAll();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const pos = getCanvasPos(e);
+            coordDisplay.textContent = `X: ${Math.round(pos.x)}  Y: ${Math.round(pos.y)}`;
+
+            if (isPanning) {
+                panOffset.x = pos.x - panStart.x;
+                panOffset.y = pos.y - panStart.y;
+                redrawAll();
+                return;
+            }
+
+            if (!isDrawing || !startPos) return;
+
+            if (currentTool === 'select' && selectedShapeIndex >= 0 && startPos.shapeRef) {
+                const dx = pos.x - startPos.x;
+                const dy = pos.y - startPos.y;
+                const shape = shapes[selectedShapeIndex];
+                if (shape.type === 'line') {
+                    shape.x1 = startPos.origX + dx;
+                    shape.y1 = startPos.origY + dy;
+                    shape.x2 = startPos.origX + dx + (startPos.shapeRef.x2 - startPos.shapeRef.x1);
+                    shape.y2 = startPos.origY + dy + (startPos.shapeRef.y2 - startPos.shapeRef.y1);
+                } else {
+                    shape.x = startPos.origX + dx;
+                    shape.y = startPos.origY + dy;
+                }
+                redrawAll();
+                return;
+            }
+
+            if (currentTool === 'line') {
+                const snapped = snap(pos.x, pos.y);
+                currentTempShape.x2 = snapped.x;
+                currentTempShape.y2 = snapped.y;
+            } else {
+                const snapped = snap(pos.x, pos.y);
+                currentTempShape.x = Math.min(startPos.x, snapped.x);
+                currentTempShape.y = Math.min(startPos.y, snapped.y);
+                currentTempShape.w = Math.abs(snapped.x - startPos.x);
+                currentTempShape.h = Math.abs(snapped.y - startPos.y);
+            }
+            redrawAll();
+        });
+
+        canvas.addEventListener('mouseup', (e) => {
+            if (isPanning) {
+                isPanning = false;
+                drawContainer.classList.remove('tool-pan');
+                panStart = null;
+                return;
+            }
+            if (!isDrawing) return;
+
+            if (currentTool === 'select' && selectedShapeIndex >= 0 && startPos && startPos.shapeRef) {
+                const dx = (getCanvasPos(e).x - startPos.x);
+                const dy = (getCanvasPos(e).y - startPos.y);
+                if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                    pushUndo();
+                    soundDraw();
+                }
+                isDrawing = false;
+                startPos = null;
+                currentTempShape = null;
+                redrawAll();
+                return;
+            }
+
+            if (currentTempShape && (currentTempShape.w > 2 || currentTempShape.h > 2 || currentTool === 'line')) {
+                pushUndo();
+                const finalShape = { ...currentTempShape };
+                if (currentTool === 'line') {
+                    finalShape.x = finalShape.x1;
+                    finalShape.y = finalShape.y1;
+                    finalShape.w = finalShape.x2 - finalShape.x1;
+                    finalShape.h = finalShape.y2 - finalShape.y1;
+                }
+                shapes.push(finalShape);
+                soundDraw();
+            }
+            isDrawing = false;
+            startPos = null;
+            currentTempShape = null;
+            redrawAll();
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            if (isPanning) { isPanning = false;
+                drawContainer.classList.remove('tool-pan'); }
+            if (isDrawing && currentTool === 'select') {
+                isDrawing = false;
+                startPos = null;
+                currentTempShape = null;
+                redrawAll();
+            }
+        });
+
+        // پشتیبانی از لمس
+        canvas.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousedown', { clientX: touch.clientX, clientY: touch.clientY,
+                    button: 0 });
+                canvas.dispatchEvent(mouseEvent);
+                e.preventDefault();
+            }
+        }, { passive: false });
+        canvas.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1) {
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousemove', { clientX: touch.clientX, clientY: touch.clientY });
+                canvas.dispatchEvent(mouseEvent);
+                e.preventDefault();
+            }
+        }, { passive: false });
+        canvas.addEventListener('touchend', (e) => {
+            const mouseEvent = new MouseEvent('mouseup', { button: 0 });
+            canvas.dispatchEvent(mouseEvent);
+            e.preventDefault();
+        }, { passive: false });
+
+        // بزرگ‌نمایی با اسکرول
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -5 : 5;
+            gridSpacing.val = Math.max(15, Math.min(80, gridSpacing.val + delta));
+            document.getElementById('gridSize').value = gridSpacing.val;
+            document.getElementById('gridSizeVal').textContent = gridSpacing.val;
+            zoomIndicator.textContent = `شبکه: ${gridSpacing.val}px`;
+            redrawAll();
+        }, { passive: false });
+
+        // ──────────────────────────────────────────────
+        //  کلیدهای میانبر
+        // ──────────────────────────────────────────────
+        window.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            const key = e.key.toLowerCase();
+            if (e.ctrlKey && key === 'z') { e.preventDefault();
+                undoAction(); return; }
+            if (e.ctrlKey && key === 'y') { e.preventDefault();
+                redoAction(); return; }
+            if (e.ctrlKey && key === 's') { e.preventDefault();
+                exportPNG(); return; }
+            if (key === 'delete' || key === 'backspace') {
+                if (selectedShapeIndex >= 0) {
+                    e.preventDefault();
+                    pushUndo();
+                    shapes.splice(selectedShapeIndex, 1);
+                    selectedShapeIndex = -1;
+                    redrawAll();
+                    showToast('🗑 شکل حذف شد', 'warning');
+                    soundClear();
+                }
+                return;
+            }
+            if (key === 'escape') { selectedShapeIndex = -1;
+                redrawAll();
+                showToast('انتخاب لغو شد', 'info');
+                soundClick(); return; }
+            if (key === 'g') { toggleGrid(); return; }
+            if (key === 'f') { toggleFill(); return; }
+            if (key === 'l') { setTool('line', document.querySelector('.tool-btn[data-tool="line"]')); return; }
+            if (key === 'r') { setTool('rect', document.querySelector('.tool-btn[data-tool="rect"]')); return; }
+            if (key === 'e') { setTool('ellipse', document.querySelector('.tool-btn[data-tool="ellipse"]')); return; }
+            if (key === 't') { setTool('triangle', document.querySelector('.tool-btn[data-tool="triangle"]')); return; }
+            if (key === 's') { setTool('select', document.querySelector('.tool-btn[data-tool="select"]')); return; }
+            if (key === 'x') { setTool('eraser', document.querySelector('.tool-btn[data-tool="eraser"]')); return; }
+        });
+
+        // ──────────────────────────────────────────────
+        //  ابزارهای UI
+        // ──────────────────────────────────────────────
+        function setTool(tool, btn) {
+            currentTool = tool;
+            selectedShapeIndex = -1;
+            isDrawing = false;
+            currentTempShape = null;
+            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            drawContainer.className = 'draw-container';
+            if (tool === 'select') drawContainer.classList.add('tool-select');
+            if (tool === 'eraser') drawContainer.classList.add('tool-eraser');
+            if (tool === 'pan') drawContainer.classList.add('tool-pan');
+            soundClick();
+            redrawAll();
+        }
+
+        function setColor(color, dotEl) {
+            currentColor = color;
+            document.getElementById('customColor').value = color;
+            document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+            if (dotEl) dotEl.classList.add('active');
+            const matchDot = document.querySelector(`.color-dot[data-color="${color}"]`);
+            if (matchDot && matchDot !== dotEl) matchDot.classList.add('active');
+            soundClick();
+        }
+
+        function toggleFill() {
+            fillEnabled = !fillEnabled;
+            const btn = document.getElementById('fillToggle');
+            btn.textContent = fillEnabled ? '🟦 توپر' : '⬜ توخالی';
+            if (fillEnabled) btn.classList.add('active');
+            else btn.classList.remove('active');
+            soundClick();
+        }
+
+        function toggleGrid() {
+            gridVisible = !gridVisible;
+            const btn = document.getElementById('gridToggle');
+            btn.textContent = gridVisible ? '🔲 شطرنجی روشن' : '🔳 شطرنجی خاموش';
+            if (gridVisible) btn.classList.remove('danger');
+            else btn.classList.add('danger');
+            soundClick();
+            redrawAll();
+        }
+
+        function updateLineWidth(val) {
+            lineWidth.val = parseInt(val);
+            document.getElementById('lineWidthVal').textContent = val;
+        }
+
+        function updateGridSize(val) {
+            gridSpacing.val = parseInt(val);
+            document.getElementById('gridSizeVal').textContent = val;
+            zoomIndicator.textContent = `شبکه: ${val}px`;
+            redrawAll();
+        }
+
+        // ──────────────────────────────────────────────
+        //  تعویض تب
+        // ──────────────────────────────────────────────
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+            if (tabId === 'drawTab') {
+                setTimeout(resizeCanvas, 50);
+            }
+            soundClick();
+        }
+
+        // ──────────────────────────────────────────────
+        //  اعلان‌ها
+        // ──────────────────────────────────────────────
+        function showToast(msg, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        // ──────────────────────────────────────────────
+        //  ماشین حساب
+        // ──────────────────────────────────────────────
+        function selectCalcShape(shape, btn) {
+            calcShapeType = shape;
+            document.querySelectorAll('.shape-btn-calc').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            document.getElementById('calcResult').style.display = 'none';
+            renderCalcInputs();
+            soundClick();
+        }
+
+        function renderCalcInputs() {
+            const titleMap = {
+                square: '⬜ محاسبه‌گر مربع',
+                rectangle: '▭ محاسبه‌گر مستطیل',
+                circle: '⭕ محاسبه‌گر دایره',
+                triangle: '🔺 محاسبه‌گر مثلث (فرمول هرون)',
+                rhombus: '◇ محاسبه‌گر لوزی',
+                trapezoid: '⏢ محاسبه‌گر ذوزنقه',
+                parallelogram: '▱ محاسبه‌گر متوازی‌الاضلاع',
+                ellipse: '🔵 محاسبه‌گر بیضی',
+                sphere: '🌐 محاسبه‌گر کره (سه‌بعدی)',
+                cube: '📦 محاسبه‌گر مکعب (سه‌بعدی)',
+                cylinder: '🥫 محاسبه‌گر استوانه (سه‌بعدی)',
+                cone: '📐 محاسبه‌گر مخروط (سه‌بعدی)',
+            };
+            document.getElementById('calcTitle').textContent = titleMap[calcShapeType] || 'محاسبه‌گر';
+            const inputsDiv = document.getElementById('calcInputs');
+            inputsDiv.innerHTML = '';
+            const fields = {
+                square: [{ label: 'ضلع (a):', id: 'inp_a' }],
+                rectangle: [{ label: 'طول (a):', id: 'inp_a' }, { label: 'عرض (b):', id: 'inp_b' }],
+                circle: [{ label: 'شعاع (r):', id: 'inp_r' }],
+                triangle: [{ label: 'ضلع a:', id: 'inp_a' }, { label: 'ضلع b:', id: 'inp_b' }, { label: 'ضلع c:',
+                    id: 'inp_c' }],
+                rhombus: [{ label: 'قطر اول (d₁):', id: 'inp_d1' }, { label: 'قطر دوم (d₂):', id: 'inp_d2' },
+                { label: 'ضلع (a):', id: 'inp_a' }],
+                trapezoid: [{ label: 'قاعده اول (a):', id: 'inp_a' }, { label: 'قاعده دوم (b):', id: 'inp_b' },
+                { label: 'ارتفاع (h):', id: 'inp_h' }],
+                parallelogram: [{ label: 'قاعده (b):', id: 'inp_a' }, { label: 'ارتفاع (h):', id: 'inp_h' },
+                { label: 'ضلع جانبی (s):', id: 'inp_b' }],
+                ellipse: [{ label: 'نیم‌قطر بزرگ (a):', id: 'inp_a' }, { label: 'نیم‌قطر کوچک (b):', id: 'inp_b' }],
+                sphere: [{ label: 'شعاع (r):', id: 'inp_r' }],
+                cube: [{ label: 'ضلع (a):', id: 'inp_a' }],
+                cylinder: [{ label: 'شعاع (r):', id: 'inp_r' }, { label: 'ارتفاع (h):', id: 'inp_h' }],
+                cone: [{ label: 'شعاع (r):', id: 'inp_r' }, { label: 'ارتفاع (h):', id: 'inp_h' }, { label: 'مولد (l):',
+                    id: 'inp_l' }],
+            };
+            (fields[calcShapeType] || []).forEach(f => {
+                const row = document.createElement('div');
+                row.className = 'input-row';
+                row.innerHTML =
+                    `<label>${f.label}</label><input type="number" id="${f.id}" placeholder="مقدار را وارد کنید" step="any">`;
+                inputsDiv.appendChild(row);
+            });
+        }
+
+        function calculateShape() {
+            const getVal = (id) => parseFloat(document.getElementById(id)?.value) || 0;
+            let area, perimeter, extra = '';
+            const s = calcShapeType;
+
+            try {
+                switch (s) {
+                    case 'square':
+                        const a = getVal('inp_a');
+                        area = a * a;
+                        perimeter = 4 * a;
+                        break;
+                    case 'rectangle':
+                        const ra = getVal('inp_a'),
+                            rb = getVal('inp_b');
+                        area = ra * rb;
+                        perimeter = 2 * (ra + rb);
+                        break;
+                    case 'circle':
+                        const cr = getVal('inp_r');
+                        area = Math.PI * cr * cr;
+                        perimeter = 2 * Math.PI * cr;
+                        break;
+                    case 'triangle':
+                        const ta = getVal('inp_a'),
+                            tb = getVal('inp_b'),
+                            tc = getVal('inp_c');
+                        const ts = (ta + tb + tc) / 2;
+                        area = Math.sqrt(ts * (ts - ta) * (ts - tb) * (ts - tc));
+                        perimeter = ta + tb + tc;
+                        if (isNaN(area)) throw new Error('اضلاع نامعتبر');
+                        break;
+                    case 'rhombus':
+                        const d1 = getVal('inp_d1'),
+                            d2 = getVal('inp_d2'),
+                            ra2 = getVal('inp_a');
+                        area = (d1 * d2) / 2;
+                        perimeter = ra2 > 0 ? 4 * ra2 : 'نامشخص (ضلع را وارد کنید)';
+                        break;
+                    case 'trapezoid':
+                        const tra = getVal('inp_a'),
+                            trb = getVal('inp_b'),
+                            trh = getVal('inp_h');
+                        area = ((tra + trb) * trh) / 2;
+                        perimeter = 'دور شکل';
+                        break;
+                    case 'parallelogram':
+                        const pb = getVal('inp_a'),
+                            ph = getVal('inp_h'),
+                            ps = getVal('inp_b');
+                        area = pb * ph;
+                        perimeter = ps > 0 ? 2 * (pb + ps) : 'نامشخص (ضلع جانبی را وارد کنید)';
+                        break;
+                    case 'ellipse':
+                        const ea = getVal('inp_a'),
+                            eb = getVal('inp_b');
+                        area = Math.PI * ea * eb;
+                        perimeter = '≈ ' + (Math.PI * (3 * (ea + eb) - Math.sqrt((3 * ea + eb) * (ea + 3 * eb))))
+                            .toFixed(4) + ' (تقریبی)';
+                        break;
+                    case 'sphere':
+                        const sr = getVal('inp_r');
+                        area = 4 * Math.PI * sr * sr;
+                        extra = 'حجم: ' + ((4 / 3) * Math.PI * sr * sr * sr).toFixed(4);
+                        perimeter = 'مساحت سطح: ' + area.toFixed(4);
+                        break;
+                    case 'cube':
+                        const ca = getVal('inp_a');
+                        area = 6 * ca * ca;
+                        extra = 'حجم: ' + (ca * ca * ca).toFixed(4);
+                        perimeter = 'مساحت سطح: ' + area.toFixed(4);
+                        break;
+                    case 'cylinder':
+                        const cyr = getVal('inp_r'),
+                            cyh = getVal('inp_h');
+                        area = 2 * Math.PI * cyr * (cyr + cyh);
+                        extra = 'حجم: ' + (Math.PI * cyr * cyr * cyh).toFixed(4);
+                        perimeter = 'مساحت سطح: ' + area.toFixed(4);
+                        break;
+                    case 'cone':
+                        const cor = getVal('inp_r'),
+                            coh = getVal('inp_h'),
+                            col = getVal('inp_l');
+                        const slant = col > 0 ? col : Math.sqrt(cor * cor + coh * coh);
+                        area = Math.PI * cor * (cor + slant);
+                        extra = 'حجم: ' + ((1 / 3) * Math.PI * cor * cor * coh).toFixed(4);
+                        perimeter = 'مساحت سطح: ' + area.toFixed(4);
+                        break;
+                    default:
+                        area = 0;
+                        perimeter = 'نامشخص';
+                }
+                const resultDiv = document.getElementById('calcResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <div class="res-line">📐 <strong>مساحت:</strong> <span>${typeof area === 'number' ? area.toFixed(4) + ' واحد مربع' : area}</span></div>
+                    <div class="res-line">📏 <strong>محیط/پیرامون:</strong> <span>${typeof perimeter === 'number' ? perimeter.toFixed(4) + ' واحد' : perimeter}</span></div>
+                    ${extra ? `<div class="res-line">📦 <strong>${extra}</strong></div>` : ''}
+                `;
+                resultDiv.style.animation = 'none';
+                resultDiv.offsetHeight;
+                resultDiv.style.animation = 'fadeSlideIn 0.4s ease';
+
+                const histEntry = {
+                    shape: calcShapeType,
+                    area: typeof area === 'number' ? area.toFixed(4) : area,
+                    perimeter: typeof perimeter === 'number' ? perimeter.toFixed(4) : perimeter,
+                    time: new Date().toLocaleTimeString('fa-IR'),
+                };
+                calcHistory.unshift(histEntry);
+                if (calcHistory.length > 20) calcHistory.pop();
+                updateHistoryUI();
+                soundCalc();
+            } catch (err) {
+                const resultDiv = document.getElementById('calcResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = '<div class="res-line" style="color:#e74c3c;">⚠️ خطا: ورودی‌ها را بررسی کنید!</div>';
+                resultDiv.style.animation = 'none';
+                resultDiv.offsetHeight;
+                resultDiv.style.animation = 'fadeSlideIn 0.4s ease';
+                soundError();
+            }
+        }
+
+        function updateHistoryUI() {
+            const list = document.getElementById('historyList');
+            if (calcHistory.length === 0) { list.innerHTML = 'هنوز محاسبه‌ای انجام نشده.'; return; }
+            list.innerHTML = calcHistory.slice(0, 10).map((h, i) =>
+                `<div class="hist-item" onclick="restoreHistory(${i})" title="کلیک برای مشاهده">🕐 ${h.time} — ${h.shape}: مساحت=${h.area}</div>`
+            ).join('');
+        }
+
+        function restoreHistory(index) {
+            const h = calcHistory[index];
+            if (h && h.shape) {
+                selectCalcShape(h.shape, document.querySelector(`.shape-btn-calc[data-shape="${h.shape}"]`));
+                showToast('📋 بازیابی: ' + h.shape, 'info');
+                soundClick();
+            }
+        }
+
+        // ──────────────────────────────────────────────
+        //  راه‌اندازی اولیه
+        // ──────────────────────────────────────────────
+        function init() {
+            resizeCanvas();
+            renderCalcInputs();
+            updateHistoryUI();
+            document.getElementById('customColor').addEventListener('input', function() {
+                setColor(this.value, null);
+            });
+            setColor('#ffffff', document.querySelector('.color-dot[data-color="#ffffff"]'));
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        init();
+        redrawAll();
+
+        console.log('%c✨ استودیوی هندسه پیشرفته %cآماده!',
+            'font-size:1.3rem;font-weight:bold;color:#00d4ff;',
+            'font-size:0.9rem;color:#8b949e;');
+        console.log('%c⌨ میانبرها: L=خط R=مستطیل E=بیضی T=مثلث S=انتخاب X=پاک‌کن G=شطرنجی F=پر کردن Ctrl+Z=برگشت Ctrl+Y=بازانجام Delete=حذف',
+            'color:#8b949e;');
+    </script>
+</body>
+</html>
+
+<!-- Hossein P. -->
